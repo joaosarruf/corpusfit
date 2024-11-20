@@ -3,9 +3,9 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'localhost',
-        port: '3001', // Porta onde o servidor está rodando
-        pathname: '/uploads/**', // Caminho específico para suas imagens
+        hostname: 'corpusfit.site',  // Seu domínio real
+        port: '', // Não especificar porta se estiver usando a porta padrão 80
+        pathname: '/uploads/**',
       },
     ],
   },

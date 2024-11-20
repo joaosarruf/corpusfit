@@ -17,9 +17,9 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  const port = process.env.PORT || 3000;
-  server.listen(port, (err) => {
+  const port = process.env.PORT || 3000;  // Pode ser 80 ou 443 dependendo do proxy
+  server.listen(port, '0.0.0.0', (err) => {  // Listen em 0.0.0.0
     if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
+    console.log(`> Ready on http://0.0.0.0:${port}`);
   });
 });
