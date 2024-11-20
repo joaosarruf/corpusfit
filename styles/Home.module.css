@@ -1,0 +1,487 @@
+/* Estilo global */
+.body {
+  background-color: #2c2c2c; /* Cor de fundo cinza escuro */
+  color: #f5f5f5; /* Cor do texto padrão */
+  margin: 0; /* Remove margens padrão */
+  padding: 0; /* Remove preenchimento padrão */
+}
+
+
+/* Container slickprincipal */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  overflow: hidden; /* Evita as barras de rolagem */
+  text-align: center;
+}
+
+/* Título */
+.title img {
+  max-width: 326px;
+  height: auto;
+  margin-left: -4px;
+  margin-top: -1px;
+  filter: drop-shadow(8px 5px 9px black);
+}
+
+/* Carrosséis */
+.carouselContainer {
+  display: flex;
+  flex-direction: row; /* Alterado de row para column */
+  align-items: center; /* Centralizar os carrosséis */
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  overflow: hidden; /* Evitar rolagem */
+}
+
+.carousel {
+  width: 28%;
+  margin: 6px 0rem;
+  padding: 0 28px;
+  
+}
+
+.carouselTitle {
+  font-family: Bebas Neue;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  color: #0f0;
+  margin-top: 78px;
+  text-shadow: #146e029e -2px 3px 0;
+  z-index: 1;
+  position: relative;
+}
+
+.slick-slider {
+  display: flex;
+  align-items: center;
+}
+
+.slick-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+  height: auto  ;
+  border-radius: 5%;
+  box-sizing: border-box;
+  transition: border-color 0.3s, transform 0.3s;
+  object-fit: cover;
+}
+
+.image:hover {
+  border-color: #ff0000;
+  transform: scale(1.02);
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 290px;
+  height: 515px;
+}
+
+/* Ajustar o layout das setas para o carrossel */
+.slick-prev, .slick-next {
+  top: 50%; /* Centraliza verticalmente */
+  transform: translateY(-50%); /* Ajusta o centro para ficar exato */
+  z-index: 2; /* Garante que as setas fiquem sobre as imagens */
+  color: #fff; /* Cor das setas */
+  left: 10px ;
+}
+
+/* Ajuste para o texto dos dots */
+.slick-dots li button:before {
+  font-size: 12px;
+  color: #ff0000;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #001f61;
+}
+
+
+
+/* Estilos do footer */
+.footerContainer {
+  background-color: #333;
+  color: rgb(81, 255, 0);
+  padding: 37px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100vw;
+}
+
+.footerSection {
+  margin: 10px;
+  position: relative;
+}
+.footerSectionMap{
+  position: relative;
+  margin: 15px 34%;
+}
+
+.footerSectionContact{
+  position: relative;
+  left:0%;
+  top: 10%;
+  margin-top: 4%;
+
+}
+
+.footerSectionSocial{
+  position: relative;
+  left: -8%;
+  margin-top: 4%;
+}
+/* Estilos específicos para o título do footer */
+.footerTitle {
+  font-size: 3rem;
+  color: #00ff00;
+  font-family: 'Bebas Neue', sans-serif;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Estilos para o tagline */
+.footerTagline {
+  font-size: 1.2rem;
+  color: #ffffff;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Estilos específicos para o mapa */
+.footerMapSection {
+  flex-basis: 30%; /* Controla o tamanho da seção */
+  text-align: right;
+}
+
+.footerMapTitle {
+  font-size: 2.0rem;
+  font-family: Arial, sans-serif;
+  color: #0f0;
+  margin-bottom: 10px;
+  margin-left: -19%;
+}
+
+.cardContainer {
+  position: relative;
+  width: 100%;
+  max-width: 300px; 
+  aspect-ratio: 2 / 3; /* Largura:Altura (ex 2:3) */
+  margin: 0 auto; /* Centralizar cards */
+  overflow: hidden;
+}
+
+/* Estilos para o envoltório da imagem */
+.imageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ajuste geral para o iframe */
+.footerMapIframe {
+  height: 250px;
+  width: 100vw; /* Ocupar a largura da tela sem ultrapassar */
+  max-width: 100%; /* Evita que o iframe ultrapasse a largura máxima */
+  border: 0;
+  margin: 0 auto; /* Centraliza o iframe */
+}
+
+/* Estilos para a seção de contato */
+.footerContactTitle {
+  font-size: 1.5rem;
+  font-family: Arial, sans-serif;
+  color: #0f0;
+  margin-bottom: 10px;
+  text-align: center;
+  text-align: left;
+}
+
+.email {
+  font-size: 1rem;
+  color: #fff;
+  font-family: Lato, sans-serif;
+  margin-bottom: 5px;
+  text-align: center;
+  margin-left: -31%;
+}
+
+.telefone {
+  font-size: 1rem;
+  color: #fff;
+  text-align: left;
+  margin-left: -16%;
+}
+
+/* Estilos para redes sociais */
+.footerSocialTitle {
+  font-size: 1.5rem;
+  font-family: Arial, sans-serif;
+  color: #0f0;
+  margin-bottom: 10px;
+  text-align: center;
+  text-align: left;
+}
+
+.footerSocialLinks {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.footerSocialLink {
+  font-size: 1.2rem;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.footerSocialLink:hover {
+  color: #00ccff;
+}
+
+
+
+/* Media queries para responsividade Footer */
+/* Media query para telas menores */
+@media (max-width: 768px) {
+  .cardContainer {
+    width: auto; /* Permite que a largura seja determinada pelo conteúdo */
+    height: auto; /* Permite que a altura seja determinada pelo conteúdo */
+    margin: 0 auto; /* Centraliza o contêiner */
+    overflow: hidden; /* Esconde qualquer conteúdo que ultrapasse o contêiner */
+  }
+
+   .imageWrapper {
+    position: relative;
+    width: 100%;
+    
+  }
+  
+  .carouselContainer {
+    grid-gap: 20px;
+    width: 100vw;
+    margin: 26px 0;
+    display: flex;  
+    flex-direction: column; /* Alterado de row para column */
+    /* align-items: center; */
+
+  }
+
+  .carousel {
+    width: 100%;
+    margin: 0;
+  }
+
+  .image {
+    width: 74vw;
+    height: 77vw;
+    max-width: none;
+    object-fit: cover;
+    margin-left: 6%;
+    
+  }
+
+}
+/* Para smartphones pequenos (até 475px) */
+@media (max-width: 475px) {
+  .footerMapIframe {
+    height: 250px;
+    width: 90vw; /* Adapta para 90% da largura da viewport */
+  }
+
+  .footerTagline {
+    font-size: 1rem;
+  }
+
+  .footerMapTitle,
+  .footerContactTitle,
+  .footerSocialTitle {
+    font-size: 1.2rem;
+  }
+
+  .footerSectionMap,
+  .footerSectionContact,
+  .footerSectionSocial {
+    margin-top: 4%;
+    left: 0;
+  }
+
+  .footerSectionMap{
+    position: relative;
+    margin: 15px 1%;
+  }
+
+  .email,
+  .telefone {
+    margin-left: 0;
+  }
+
+  .footerSection {
+    margin: 10px;
+    left: 0;
+  }
+
+  
+}
+
+/* Para dispositivos entre 640px e 768px */
+@media (min-width: 640px) and (max-width: 768px) {
+  .footerContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+  }
+
+  .footerSection {
+    margin: 10px 0;
+    position: relative;
+    text-align: center;
+  }
+
+  .footerMapIframe {
+    width: 100vw;
+    height: 200px;
+  }
+
+  .footerTitle {
+    font-size: 2rem;
+  }
+
+  .footerTagline {
+    font-size: 1rem;
+  }
+
+  .footerSocialLinks {
+    text-align: center;
+  }
+
+
+}
+
+/* Para dispositivos entre 768px e 1024px */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .footerContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footerSection {
+    margin-bottom: 20px;
+  }
+
+  .footerTitle {
+    font-size: 2.5rem;
+  }
+
+  .footerMapIframe {
+    width: 100%;
+    height: 250px;
+  }
+}
+
+/* Para dispositivos entre 1024px e 1280px */
+@media (min-width: 1024px) and (max-width: 1280px) {
+
+  .footerSectionSocial {
+    position: relative;
+    left: 41%;
+    margin-top: 4%;
+  }
+
+  .footerContainer {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .footerSection {
+    margin: 15px 0;
+    position: relative;
+    left: 33%;
+    
+  }
+
+  .footerTitle {
+    font-size: 2.5rem;
+  }
+
+  .footerMapIframe {
+    width: 100%;
+    height: 250px;
+  }
+
+  .footerSectionContact{
+    position: relative;
+    margin: 15px 40%;
+  }
+
+}
+
+/* Para dispositivos entre 1280px e 1536px */
+@media (min-width: 1280px) and (max-width: 1536px) {
+  .footerContainer {
+    padding: 40px;
+  }
+
+  .footerTitle {
+    font-size: 3.5rem;
+  }
+
+  .footerMapIframe {
+    height: 300px;
+    width: 35vw;
+  }
+
+  .footerSection {
+    margin: 20px;
+    left: 33%;
+    
+  }
+
+  .footerSectionContact {
+    left: 4%;
+  }
+
+  .footerSectionSocial {
+    left: 2%;
+  }
+}
+
+/* Para dispositivos acima de 1536px */
+@media (min-width: 1536px) {
+  .footerMapIframe {
+    width: 29vw;
+    height: 250px;
+  }
+
+  .footerSectionContact {
+    left: 6%;
+  }
+
+  .footerSection {
+    margin: 20px;
+    left: 33%;
+    
+  }
+
+  .footerSectionSocial{
+    left: -6%;
+  }
+}

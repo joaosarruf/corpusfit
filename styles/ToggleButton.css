@@ -1,0 +1,53 @@
+
+  
+  
+  .toggle-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: var(--color-bg);
+  }
+  
+  .toggle {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .input {
+    display: none;
+  }
+  
+  .label {
+    width: 100%;
+    height: 100%;
+    background: var(--color-off);
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .input:checked + label {
+    background: var(--color-on);
+  }
+  
+  .thumb {
+    width: 26px;
+    height: 26px;
+    background: var(--color-light);
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: left 0.3s ease;
+  }
+  
+  .input:checked + label .thumb {
+    left: calc(100% - 28px);
+  }
+  

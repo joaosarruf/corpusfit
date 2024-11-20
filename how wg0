@@ -1,0 +1,82 @@
+-- Logs begin at Sat 2024-10-05 23:48:53 -03, end at Fri 2024-10-11 16:31:57 -03. --
+Oct 10 19:33:54 Sarruf systemd[1]: Starting WireGuard via wg-quick(8) for wg0...
+Oct 10 19:33:54 Sarruf wg-quick[9006]: wg-quick: `wg0' already exists
+Oct 10 19:33:54 Sarruf systemd[1]: [0;1;39m[0;1;31m[0;1;39mwg-quick@wg0.service: Main process exited, code=exited, status=1/FAILURE[0m
+Oct 10 19:33:54 Sarruf systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mwg-quick@wg0.service: Failed with result 'exit-code'.[0m
+Oct 10 19:33:54 Sarruf systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start WireGuard via wg-quick(8) for wg0.[0m
+[0;1;39m-- Reboot --[0m
+Oct 11 15:28:55 Sarruf systemd[1]: Starting WireGuard via wg-quick(8) for wg0...
+Oct 11 15:28:55 Sarruf wg-quick[60891]: wg-quick: `wg0' already exists
+Oct 11 15:28:55 Sarruf systemd[1]: [0;1;39m[0;1;31m[0;1;39mwg-quick@wg0.service: Main process exited, code=exited, status=1/FAILURE[0m
+Oct 11 15:28:55 Sarruf systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mwg-quick@wg0.service: Failed with result 'exit-code'.[0m
+Oct 11 15:28:55 Sarruf systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start WireGuard via wg-quick(8) for wg0.[0m
+Oct 11 15:29:42 Sarruf systemd[1]: Starting WireGuard via wg-quick(8) for wg0...
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip link add wg0 type wireguard
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] wg setconf wg0 /dev/fd/63
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip -4 address add 10.0.0.2/24 dev wg0
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip link set mtu 1420 up dev wg0
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] wg set wg0 fwmark 51820
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip -4 route add 0.0.0.0/0 dev wg0 table 51820
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip -4 rule add not fwmark 51820 table 51820
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip -4 rule add table main suppress_prefixlength 0
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] sysctl -q net.ipv4.conf.all.src_valid_mark=1
+Oct 11 15:29:42 Sarruf wg-quick[60964]: [#] iptables-restore -n
+Oct 11 15:29:42 Sarruf wg-quick[60965]: iptables-restore v1.8.4 (nf_tables): unknown option "--save-mark"
+Oct 11 15:29:42 Sarruf wg-quick[60965]: Error occurred at line: 5
+Oct 11 15:29:42 Sarruf wg-quick[60965]: Try `iptables-restore -h' or 'iptables-restore --help' for more information.
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip -4 rule delete table 51820
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip -4 rule delete table main suppress_prefixlength 0
+Oct 11 15:29:42 Sarruf wg-quick[60924]: [#] ip link delete dev wg0
+Oct 11 15:29:42 Sarruf systemd[1]: [0;1;39m[0;1;31m[0;1;39mwg-quick@wg0.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 11 15:29:42 Sarruf systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mwg-quick@wg0.service: Failed with result 'exit-code'.[0m
+Oct 11 15:29:42 Sarruf systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start WireGuard via wg-quick(8) for wg0.[0m
+Oct 11 15:30:49 Sarruf systemd[1]: Starting WireGuard via wg-quick(8) for wg0...
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip link add wg0 type wireguard
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] wg setconf wg0 /dev/fd/63
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip -4 address add 10.0.0.2/24 dev wg0
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip link set mtu 1420 up dev wg0
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] wg set wg0 fwmark 51820
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip -4 route add 0.0.0.0/0 dev wg0 table 51820
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip -4 rule add not fwmark 51820 table 51820
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip -4 rule add table main suppress_prefixlength 0
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] sysctl -q net.ipv4.conf.all.src_valid_mark=1
+Oct 11 15:30:49 Sarruf wg-quick[61096]: [#] iptables-restore -n
+Oct 11 15:30:49 Sarruf wg-quick[61097]: iptables-restore v1.8.4 (nf_tables): unknown option "--save-mark"
+Oct 11 15:30:49 Sarruf wg-quick[61097]: Error occurred at line: 5
+Oct 11 15:30:49 Sarruf wg-quick[61097]: Try `iptables-restore -h' or 'iptables-restore --help' for more information.
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip -4 rule delete table 51820
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip -4 rule delete table main suppress_prefixlength 0
+Oct 11 15:30:49 Sarruf wg-quick[61056]: [#] ip link delete dev wg0
+Oct 11 15:30:50 Sarruf systemd[1]: [0;1;39m[0;1;31m[0;1;39mwg-quick@wg0.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 11 15:30:50 Sarruf systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mwg-quick@wg0.service: Failed with result 'exit-code'.[0m
+Oct 11 15:30:50 Sarruf systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start WireGuard via wg-quick(8) for wg0.[0m
+Oct 11 15:34:15 Sarruf systemd[1]: Starting WireGuard via wg-quick(8) for wg0...
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip link add wg0 type wireguard
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] wg setconf wg0 /dev/fd/63
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip -4 address add 10.0.0.2/24 dev wg0
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip link set mtu 1420 up dev wg0
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] wg set wg0 fwmark 51820
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip -4 route add 0.0.0.0/0 dev wg0 table 51820
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip -4 rule add not fwmark 51820 table 51820
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip -4 rule add table main suppress_prefixlength 0
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] sysctl -q net.ipv4.conf.all.src_valid_mark=1
+Oct 11 15:34:15 Sarruf wg-quick[454]: [#] iptables-restore -n
+Oct 11 15:34:15 Sarruf wg-quick[455]: iptables-restore v1.8.4 (legacy): unknown option "--save-mark"
+Oct 11 15:34:15 Sarruf wg-quick[455]: Error occurred at line: 5
+Oct 11 15:34:15 Sarruf wg-quick[455]: Try `iptables-restore -h' or 'iptables-restore --help' for more information.
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip -4 rule delete table 51820
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip -4 rule delete table main suppress_prefixlength 0
+Oct 11 15:34:15 Sarruf wg-quick[370]: [#] ip link delete dev wg0
+Oct 11 15:34:16 Sarruf systemd[1]: [0;1;39m[0;1;31m[0;1;39mwg-quick@wg0.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 11 15:34:16 Sarruf systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mwg-quick@wg0.service: Failed with result 'exit-code'.[0m
+Oct 11 15:34:16 Sarruf systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start WireGuard via wg-quick(8) for wg0.[0m
+Oct 11 16:06:27 Sarruf systemd[1]: Starting WireGuard via wg-quick(8) for wg0...
+Oct 11 16:06:27 Sarruf wg-quick[1831]: wg-quick: `wg0' already exists
+Oct 11 16:06:27 Sarruf systemd[1]: [0;1;39m[0;1;31m[0;1;39mwg-quick@wg0.service: Main process exited, code=exited, status=1/FAILURE[0m
+Oct 11 16:06:27 Sarruf systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mwg-quick@wg0.service: Failed with result 'exit-code'.[0m
+Oct 11 16:06:27 Sarruf systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start WireGuard via wg-quick(8) for wg0.[0m
+Oct 11 16:07:40 Sarruf systemd[1]: Starting WireGuard via wg-quick(8) for wg0...
+Oct 11 16:07:40 Sarruf wg-quick[1849]: wg-quick: `wg0' already exists
+Oct 11 16:07:40 Sarruf systemd[1]: [0;1;39m[0;1;31m[0;1;39mwg-quick@wg0.service: Main process exited, code=exited, status=1/FAILURE[0m
+Oct 11 16:07:40 Sarruf systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mwg-quick@wg0.service: Failed with result 'exit-code'.[0m
+Oct 11 16:07:40 Sarruf systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start WireGuard via wg-quick(8) for wg0.[0m

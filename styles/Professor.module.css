@@ -1,0 +1,794 @@
+/* Estilos para o container geral */
+.dashboardContainer {
+  padding: 50px 20px;
+  background-color: #1b2431; /* Fundo escuro */
+  color: white;
+  min-height: 100vh;
+  z-index: 1;
+  position: relative;
+  margin-top: 3.9%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Título do painel */
+.dashboardTitle {
+  font-size: 2.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  color: #00ff00; /* Verde neônico */
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Estilos para o botão de logout */
+.logoutButton {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.logoutButton:hover {
+  background-color: #c82333;
+}
+
+/* Botões especiais */
+.deleteButton {
+  border-color: rgba(136, 16, 16, 0.65);
+  background-color: rgba(106, 43, 43, 0.65);
+  font-size: 18px;
+}
+
+.paginationButton {
+  border-color: rgba(34, 34, 41, 0.65);
+  background-color: rgba(92, 87, 111, 0.65);
+}
+
+/* Botão de adicionar aluno */
+.addButton {
+  background-color: #0070f3;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.addButton:hover {
+  background-color: #005bb5;
+}
+
+/* Estilos para o popup de opções de cadastro */
+.cadastroOptions {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1b2431;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 20000;
+}
+
+.cadastroOptions button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cadastroOptions button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para o formulário de adicionar aluno */
+.addAlunoForm {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background-color: #313d4f;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.addAlunoForm input[type="file"] {
+  margin: 10px 0;
+}
+
+.inputField {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f4f4f4;
+}
+
+.submitButton {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #218838;
+}
+
+
+
+.cancelButton {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cancelButton:hover {
+  background-color: #c82333;
+}
+
+/* Estilos para o formulário de alterar dados do aluno */
+.alterarDadosForm {
+  display: flex;
+  flex-direction: column;
+  background-color: #313d4f;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.alterarDadosForm h3 {
+  color: #00ff00;
+  margin-bottom: 20px;
+}
+
+.alterarDadosForm .inputField {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f4f4f4;
+}
+
+.alterarDadosForm .submitButton {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.alterarDadosForm .submitButton:hover {
+  background-color: #218838;
+}
+
+.alterarDadosForm .cancelButton {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.alterarDadosForm .cancelButton:hover {
+  background-color: #c82333;
+}
+
+/* Estilos principais da tabela */
+.projectsInner {
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.projectsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid #313d4f;
+}
+
+.projectsHeader .title {
+  font-size: 24px;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.projectsHeader .count {
+  font-size: 18px;
+  color: #a5a5a5;
+}
+
+.projectsTable {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+
+.projectsTable th {
+  background-color: #313d4f;
+}
+
+.projectsTable td {
+  vertical-align: middle;
+  border-bottom: 1px solid #313d4f;
+}
+
+.projectsTable th,
+.projectsTable td {
+  padding: 8px 5px;
+  text-align: left;
+  color: white;
+  border-bottom: 1px solid #313d4f;
+  font-size: 0.9rem;
+}
+
+.projectsTable tr:hover {
+  background-color: #202b3a;
+}
+
+.projectsTable .status {
+  text-align: center;
+}
+
+/* Estilos para a coluna de status */
+.status {
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+.status:hover {
+  background-color: #202b3a;
+}
+
+.projectsTable .statusText {
+  font-size: 12px;
+  color: #66B92E; /* Verde para indicar ativo */
+}
+
+/* Botões de ações */
+.projectsTable .actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.actionButtons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.actionButtons button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para o modal de criação de treino */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1b2431;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  z-index: 20000;
+}
+
+/* Formulário dentro do modal */
+.formContainer,
+.formContainer form {
+  position: relative;
+  background-color: #3d3c3e;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 0;
+}
+
+.formContainer {
+  margin-top: 1%;
+  max-width: 25%;
+  left: 37%;
+}
+
+.formContainer label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.formContainer input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.formContainer button {
+  background-color: #f2f2f2;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.formContainer button:hover {
+  background-color: #56b30a;
+}
+
+/* Estilo de organização para os campos do modal */
+.modal h3 {
+  font-size: 1.8rem;
+  color: #00ff00;
+  margin-bottom: 20px;
+}
+
+.modal .inputField {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f4f4f4;
+}
+
+/* Estilo para as labels e selects */
+.modal label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.modal select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilo para os botões no modal */
+.modal button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.modal button:hover {
+  background-color: #0056b3;
+}
+
+.modal .addExerciseButton {
+  margin-top: 15px;
+  background-color: #28a745;
+}
+
+.modal .addExerciseButton:hover {
+  background-color: #218838;
+}
+
+.cardImage {
+  width: 80px;
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover; /* Garantir que a imagem fique bem enquadrada */
+}
+
+/* Estilos para o container de busca */
+.searchContainer {
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  padding: 8px;
+  font-size: 1rem;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* suggestions */
+.suggestionsContainer {
+  margin-top: 5px;
+  background-color: #4b4b4b;
+  border: 1px solid #252525;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 100;
+  position: absolute;
+}
+
+.suggestionsContainer.active {
+  display: block;
+}
+
+.suggestionItem {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: black;
+  font-weight: 600;
+  font-family: system-ui;
+}
+
+.suggestionItem:hover {
+  background-color: #f0f0f0;
+}
+
+/* Estilos para notificações */
+.notification {
+  background-color: #f4f4f9;
+  border-left: 4px solid #007bff;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 20px;
+  color: #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.notification ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification li {
+  padding: 6px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.notification li:hover {
+  background-color: #e3e8f1;
+  border-radius: 4px;
+}
+
+.notification li::before {
+  content: '🎂';
+  margin-right: 8px;
+}
+
+/* Estilos para o conteúdo do modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 20000;
+}
+
+.modalContent h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.modalContent p {
+  margin: 8px 0;
+  font-size: 1em;
+  color: #555;
+}
+
+.modalContent button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.modalContent button:hover {
+  color: #333;
+}
+
+/* Container dos ícones no header */
+.headerIcons {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos para o ícone de notificação no header */
+.notificationIcon {
+  position: absolute;
+  top: 19px;
+  right: 47px;
+  cursor: pointer;
+}
+
+.bellIcon {
+  font-size: 1.5em;
+  color: #333;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #ff4d4f;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+/* Estilos para o dropdown de notificações */
+.notificationDropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.notificationDropdown::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 30px;
+  border-width: 0 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent #fff;
+}
+
+.notificationDropdown h3 {
+  margin: 0;
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 1em;
+  color: #333;
+}
+
+.notificationDropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notificationDropdown li {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.notificationDropdown li:hover {
+  background-color: #f5f5f5;
+}
+
+/* Container para os treinos */
+.treinosContainer {
+  margin-top: 20px;
+  background-color: #1b2431;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+}
+
+/* Botão "Criar Treino" */
+.createTreinoButton {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.createTreinoButton:hover {
+  background-color: #218838;
+}
+
+/* Card de treino */
+.treinoCard {
+  background-color: #273142;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+
+.treinoCard h4 {
+  margin-top: 0;
+  font-size: 1.2em;
+  color: #00ff00;
+}
+
+.treinoCard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.treinoCard li {
+  padding: 5px 0;
+  border-bottom: 1px solid #313d4f;
+}
+
+.treinoCard li:last-child {
+  border-bottom: none;
+}
+
+/* Ajustes para manter o design responsivo e organizado em dispositivos móveis */
+@media (max-width: 768px) {
+  .dashboardContainer {
+    padding: 15px;
+    font-size: 0.9em;
+    top: 46px;
+  }
+
+  .dashboardTitle {
+    font-size: 1.8rem;
+  }
+
+  .formContainer {
+    margin-top: 1%;
+    max-width: 100%;
+    left: 0%;
+  }
+
+  .logoutButton {
+    top: 10px;
+    right: 10px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
+
+  .deleteButton {
+    font-size: 12px;
+  }
+
+  .headerIcons {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .notificationIcon {
+    right: 15px;
+    top: 23px;
+  }
+
+  .projectsTable,
+  .projectsTable tr,
+  .projectsTable th,
+  .projectsTable td {
+    width: 100%;
+    text-align: left;
+    padding: 8px 5px;
+    font-size: 0.7rem;
+  }
+
+  .projectsTable tr {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+
+  .modal {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .modalContent {
+    padding: 15px;
+    width: 90%;
+  }
+
+  .notification {
+    width: 95%;
+    margin: 10px auto;
+    padding: 12px;
+    font-size: 0.95em;
+    text-align: center;
+  }
+
+  .notificationDropdown {
+    width: 85%;
+    top: 50px;
+    right: 10px;
+    padding: 15px;
+  }
+
+  .notificationDropdown li {
+    padding: 8px 10px;
+  }
+
+  .cardImage {
+    width: 50px;
+    height: auto;
+  }
+
+  .projectsTable th,
+  .projectsTable td {
+    padding: 5px;
+  }
+
+  .projectsHeader .title {
+    font-size: 1.5rem;
+  }
+
+  .actionButtons button {
+    font-size: 0.8rem;
+    padding: 5px 2px;
+  }
+
+  .paginationButton {
+    margin-left: -3px !important;
+    font-size: 18px !important;
+    margin: 9px !important;
+  }
+}
+
+@media (max-width: 399px) {
+  .projectsTable,
+  .projectsTable tr,
+  .projectsTable th,
+  .projectsTable td {
+    font-size: 0.6rem;
+  }
+}

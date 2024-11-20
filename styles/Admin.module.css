@@ -1,0 +1,1006 @@
+/* Estilos para o container geral */
+
+
+.dashboardContainer {
+  padding: 20px;
+  background-color: #1b2431; /* Fundo escuro */
+  color: white;
+  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  position: fixed;
+  margin-top: 0;  /* Remover o margin-top em telas menores */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: auto;
+  top: 7%;
+  max-width: 100%;
+  overflow-x: hidden; 
+}
+
+/* Título do painel */
+.dashboardTitle {
+  font-size: 2.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  color: #00ff00; /* Verde neônico */
+  text-align: center;
+  margin-bottom: 40px;
+  width: 100%; /* Garantir que ocupe toda a largura */
+  top: 8px;
+  position: relative;
+}
+
+/* Estilos para o botão de logout */
+.logoutButton {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: absolute;
+  top: 10px; /* Ajustar para telas menores */
+  left: 11px; /* Ajustar para telas menores */
+}
+
+.logoutButton:hover {
+  background-color: #c82333;
+}
+
+/* Botão de adicionar aluno */
+.addButton {
+  background-color: #0070f3;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.addButton:hover {
+  background-color: #005bb5;
+}
+
+.cardImage {
+  width: 80px;
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover; /* Garantir que a imagem fique bem enquadrada */
+}
+
+/* Estilos para o formulário de adicionar aluno */
+.addAlunoForm {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background-color: #313d4f;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.inputField {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f4f4f4;
+}
+
+.submitButton {
+  text-decoration: none;
+  color: #fff;
+  background-color: rgb(34 34 34);
+  font-size: 27px;
+  border-radius: 12px;
+  border-width: thick;
+  border-color: rgb(2 2 2);
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.submitButton:hover {
+  background-color: #218838;
+}
+
+.deleteButton {
+  border-color: rgba(136, 16, 16, 0.65);
+  background-color: rgba(106, 43, 43, 0.65);
+  font-size: 18px;
+}
+
+.deleteButton:hover {
+  background-color: #218838;
+}
+
+.cancelButton {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cancelButton:hover {
+  background-color: #c82333;
+}
+
+/* Estilos principais da tabela */
+.projectsInner {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.projectsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid #313d4f;
+}
+
+.projectsHeader .title {
+  font-size: 24px;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.projectsHeader .count {
+  font-size: 18px;
+  color: #a5a5a5;
+}
+
+.projectsTable {
+  width: 100%;
+  background-color: #273142;
+  margin-top: 20px;
+  max-width: 100%;
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+.projectsTable th {
+  background-color: #313d4f;
+  text-align: left;
+  color: white;
+}
+
+.projectsTable td {
+  vertical-align: middle;
+  color: white;
+  border-bottom: 1px solid #313d4f;
+}
+
+
+.projectsTable th,
+.projectsTable td{
+  font-family: monospace
+
+}
+
+.projectsTable tr:hover {
+  background-color: #202b3a;
+}
+
+.projectsTable .status {
+  text-align: center;
+}
+
+.projectsTable .statusText {
+  font-size: 12px;
+  color: #66B92E; /* Verde para indicar ativo */
+}
+
+/* Botões de ações */
+.projectsTable .actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.actionButtons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: medium;
+  font-family: system-ui;
+  font-weight: 400;
+  background-color: #3d4653;
+}
+
+.actionButtons button:hover {
+  background-color: #0056b3;
+}
+
+.treinosContainer {
+  margin-top: 20px;
+  background-color: #1b2431;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+}
+
+.treinosContainer h3 {
+  font-size: 1.8rem;
+  color: #00ff00;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.listaTreinos {
+  list-style: none;
+  padding: 0;
+}
+
+.itemTreino {
+  margin-bottom: 20px;
+  background-color: #202b3a;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.itemTreino h4 {
+  font-size: 1.4rem;
+  color: #66B92E;
+}
+  
+/* Estilos para o modal de criação de treino */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1b2431;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2000;
+}
+
+.modal h3 {
+  margin-top: 0;
+  color: #00ff00;
+  font-family: 'Bebas Neue', sans-serif;
+  text-align: center;
+}
+
+.modal label {
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.modal .inputField,
+.modal select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #313d4f;
+  color: #ffffff;
+}
+
+.modal .inputField::placeholder {
+  color: #aaa;
+}
+
+/* Container dos Exercícios */
+.exerciseContainer {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  padding-right: 5px;
+}
+
+.exerciseItem {
+  background-color: #273142;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.exerciseItem label {
+  color: #ffffff;
+}
+
+.exerciseItem select {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #313d4f;
+  color: #ffffff;
+}
+
+/* Botões de Ação no Modal */
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modalActions button {
+  flex: 1;
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.modalActions button:nth-child(1) {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.modalActions button:nth-child(1):hover {
+  background-color: #0056b3;
+}
+
+.modalActions button:nth-child(2) {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.modalActions button:nth-child(2):hover {
+  background-color: #218838;
+}
+
+.modalActions button:nth-child(3) {
+  background-color: #6c757d;
+  color: #ffffff;
+}
+
+.modalActions button:nth-child(3):hover {
+  background-color: #5a6268;
+}
+
+/* Botão "Criar Treino" */
+.createTreinoButton {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.createTreinoButton:hover {
+  background-color: #218838;
+}
+
+.formContainer,
+.formContainer form  {
+  position: relative;
+  background-color: rgb(0, 0, 0);
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgb(61 60 62);
+  z-index: 0;
+}
+
+.formContainer{
+  margin-top: 1%;
+}
+
+.formContainer label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.formContainer input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.formContainer button {
+  background-color: #f2f2f2;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.formContainer button:hover {
+  background-color: #56b30a;
+}
+
+
+
+  /* Card de treino */
+.treinoCard {
+  background-color: #273142;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+
+.treinoCard h4 {
+  margin-top: 0;
+  font-size: 1.2em;
+  color: #00ff00;
+}
+
+.treinoCard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.treinoCard li {
+  padding: 5px 0;
+  border-bottom: 1px solid #313d4f;
+}
+
+.treinoCard li:last-child {
+  border-bottom: none;
+}
+
+/* Botões especiais */
+
+
+
+/* Estilo para os botões no modal */
+.modal button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.modal button:hover {
+  background-color: #0056b3;
+}
+
+.modal .addExerciseButton {
+  margin-top: 15px;
+  background-color: #28a745;
+}
+
+.modal .addExerciseButton:hover {
+  background-color: #218838;
+}
+
+
+.footer {
+  background-color: #1b2431; /* Cor de fundo igual à página */
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  position: relative;  /* Garantir que ele fique no final da página */
+  margin-top: 40px;   /* Espaçamento superior para separá-lo do conteúdo */
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+}
+  
+  /* Estilos para o botão de toggle ON/OFF */
+.toggle {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.toggleCheckbox {
+  display: none; /* Esconde o checkbox */
+}
+
+.toggleLabel {
+  width: 100%;
+  height: 100%;
+  background: #f44336; /* Cor quando OFF */
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.toggleCheckbox:checked + .toggleLabel {
+  background: #4caf50; /* Cor quando ON */
+}
+
+.thumb {
+  width: 26px;
+  height: 26px;
+  background: #ffffff; /* Cor da "bolinha" */
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s ease;
+}
+
+.toggleCheckbox:checked + .toggleLabel .thumb {
+  left: calc(100% - 28px); /* Move a bolinha para a direita quando ON */
+}
+
+.actionButtons .toggle {
+  margin: 0 10px; /* Adiciona espaçamento ao redor do botão se necessário */
+}
+
+.paginationButton {
+  padding: 2px 1px;
+  border-color: rgba(34, 34, 41, 0.65);
+  background-color: rgba(92, 87, 111, 0.65);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Botão "Criar Treino" */
+.createTreinoButton {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.createTreinoButton:hover {
+  background-color: #218838;
+}
+
+.searchInput {
+  padding: 8px;
+  font-size: 1rem;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* suggestions */
+.suggestionsContainer {
+  margin-top: 5px;
+  background-color:#4b4b4b;;
+  border: 1px solid #252525;;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 100;
+  position: absolute;
+  /* background-color: red; */
+  /* display: none; */
+}
+
+.suggestionsContainer.active {
+  display: block;
+}
+
+.suggestionItem {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: black;
+  font-weight: 600;
+  font-family: system-ui;
+}
+.suggestionItem:hover {
+  background-color: #f0f0f0;
+}
+
+/* Estilos para notificações */
+.notification {
+  background-color: #f4f4f9;
+  border-left: 4px solid #007bff;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 20px;
+  color: #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.notification ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification li {
+  padding: 6px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.notification li:hover {
+  background-color: #e3e8f1;
+  border-radius: 4px;
+}
+
+.notification li::before {
+  content: '🎂';
+  margin-right: 8px;
+}
+
+/* Estilos para o conteúdo do modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 20000;
+}
+
+.modalContent h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.modalContent p {
+  margin: 8px 0;
+  font-size: 1em;
+  color: #555;
+}
+
+.modalContent button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.modalContent button:hover {
+  color: #333;
+}
+
+.headerIcons {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos para o ícone de notificação no header */
+.notificationIcon {
+  position: absolute;
+  top: 19px;
+  right: 47px;
+  cursor: pointer;
+}
+
+.bellIcon {
+  font-size: 1.5em;
+  color: #333;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #ff4d4f;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+
+/* Estilos para o dropdown de notificações */
+.notificationDropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.notificationDropdown::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 30px;
+  border-width: 0 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent #fff;
+}
+
+.notificationDropdown h3 {
+  margin: 0;
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 1em;
+  color: #333;
+}
+
+.notificationDropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notificationDropdown li {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.notificationDropdown li:hover {
+  background-color: #f5f5f5;
+}
+
+/* Estilo para a numeração dos treinos */
+.treinoNumero {
+  font-weight: bold;
+  color: #00ff00; /* Verde neônico para destacar */
+  margin-right: 5px;
+}
+
+
+@media (min-width: 1110px) {
+  .projectsTable th, 
+  .projectsTable td{
+    padding: 15px;
+  }
+  
+
+}
+/* Estilos responsivos para telas menores */
+@media (max-width: 768px) {
+
+
+  .paginationButton {
+    margin-right: 12px;
+    
+  }
+  .dashboardContainer {
+    padding: 10px;
+    min-height: 100vh;
+    height: 100vh;
+  }
+
+  .dashboardTitle {
+    font-size: 2rem;
+    top: 10px;
+    
+  }
+
+  .projectsTable th,
+  .projectsTable td {
+    font-size: 11px;
+  }
+
+  .projectsTable {
+    min-height: 51%;
+  }
+
+  .modal {
+    width: 90%;
+  }
+}
+
+@media (max-width: 576px) {
+  .toggle {
+    width: 50px;
+    height: 25px;
+  }
+  
+  .thumb {
+    width: 22px;
+    height: 22px;
+  }
+
+  .toggleCheckbox:checked + .toggleLabel .thumb {
+    left: calc(100% - 28px); /* Move a bolinha para a direita quando ON */
+  }
+
+  .dashboardContainer {
+    padding: 10px;
+    min-height: 100vh;
+    height: 100vh;
+  }
+
+
+  .addButton {
+    padding: 8px 10px;
+  }
+
+  .projectsHeader .title {
+    font-size: 18px;
+  }
+
+  .projectsHeader .count {
+    font-size: 14px;
+  }
+
+  .modal {
+    width: 95%;
+  }
+
+  .modal h3 {
+    font-size: 1.5rem;
+  }
+
+  .deleteButton {
+    font-size: 12px;
+    margin-left: -5px;
+    font-weight: 900;
+  }
+
+  .treinoCard h4 {
+    font-size: 1rem;
+  }
+
+  .treinoCard li {
+    font-size: 0.8rem;
+  }
+
+  .dashboardTitle {
+    letter-spacing: 8px;
+  }
+  
+}
+
+.dashboardTitle {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.arrow {
+  font-size: 1.5rem;
+  margin-left: 10px;
+}
+
+
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+
+.paginationButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.paginationInfo {
+  font-size: 1rem;
+}
+
+
+@media (max-width: 430px) {
+  .dashboardContainer {
+    padding: 8px;
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+  }
+
+  .projectsInner {
+    width: 103%;
+  }
+
+  .cardImage{
+    width: 56px;
+  }
+
+  .projectsTable {
+    font-size: 12px;
+  }
+
+  .logoutButton {
+    top: 5px;
+    left: 5px;
+  }
+
+  .dashboardTitle {
+    font-size: 1.4rem;
+    top: 14px;
+    letter-spacing: 7px;
+  }
+
+ 
+
+  .modal {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .projectsTable .actionButtons {
+    display: grid;
+    gap: 11px;
+    left: -11%;
+    position: relative;
+
+  }
+
+  .actionButtons button{
+    /* padding: 2px 3px; */
+    font-size: small;
+    padding: 10px 6px;
+  }
+
+  .treinoCard h4 {
+    font-size: 1rem;
+  }
+
+  .treinoCard li {
+    font-size: 0.8rem;
+  }
+
+  .bellIcon{
+    font-size: 1.2em;
+  }
+
+  .notificationIcon{
+    right: 25px;
+  }
+}
+
+@media (max-height: 750px){
+  .dashboardContainer{
+    margin-top: 12px;
+  }
+}

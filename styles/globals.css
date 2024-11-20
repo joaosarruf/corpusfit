@@ -1,0 +1,355 @@
+/* ================= Global Styles ================= */
+:root {
+  --color-on: #4caf50; /* Verde quando ON */
+  --color-off: #f44336; /* Vermelho quando OFF */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Lato', sans-serif;
+  background-image: url('/images/background.jpg'); 
+  background-size: cover;
+  background-position: center;
+}
+
+h1, h2, h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 2px;
+}
+
+p {
+  font-family: 'Lato', sans-serif;
+}
+
+.bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(11, 0, 57, 0.8); /* Cinza escuro com 80% de opacidade */
+}
+
+/* ================= Header Styles ================= */
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background-color: rgba(11, 0, 57, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  z-index: 1000;
+  color: white;
+  box-shadow: inset 3px 7px 29px 21px rgba(0, 0, 0, 0.6);
+}
+
+.logo img,
+.header img {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  width: 95%;
+}
+
+.logo img {
+  position: absolute;
+  width: 67px;
+  left: 2%;
+  top: -23%;
+}
+
+.name img {
+  position: absolute;
+  top: -20px;
+  left: 44%;
+  filter: drop-shadow(3px 0px 1px white);
+}
+
+.contact-info,
+.login-options {
+  position: absolute;
+  display: flex;
+  top: 32px;
+  left: 71%;
+}
+
+
+.login-options {
+  position: absolute;
+  display: flex;
+  top: 23px;
+  left: 86%;
+}
+.menu-icon {
+  display: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  z-index: 1002;
+}
+
+
+
+
+/* ================= Sidebar Styles ================= */
+
+.sidebar {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width: 0px;
+  overflow-x: hidden;
+  transition: width 0.3s;
+  padding-top: 60px;
+  z-index: 1001;
+  background-color: rgba(12, 7, 39, 0.9);
+}
+
+
+.sidebar.open {
+  width: 250px;
+}
+
+.sidebar a {
+  padding: 14px 18px;
+  text-decoration: none;
+  font-size: 20px;
+  color: rgb(52, 255, 12);
+  display: block;
+  transition: background-color 2.3s;
+  background-color: rgb(0, 0, 99);
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  margin: 20px;
+  font-weight: bold;
+}
+
+
+.sidebar a:hover {
+  background-color: #575757;
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 36px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Overlay para o sidebar */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+
+.footerSection {
+  margin-bottom: 20px; /* Espaçamento entre as seções */
+}
+
+.footerRights {
+  width: 100%; /* O texto de direitos autorais ocupa toda a largura */
+  text-align: center; /* Centraliza o texto */
+  margin-top: 20px;
+}
+
+/* ================= Button Styles ================= */
+
+button {
+  text-decoration: none;
+  color: #fff;
+  background-color: rgba(88, 25, 209, 0.65);
+  font-size: 19px;
+  border-radius: 12px;
+  border-width: thick;
+  border-color: rgba(88, 25, 209, 0.65);
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.logoutButton {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: absolute;
+  top: -0.2vw;
+}
+
+.logoutButton:hover {
+  background-color: #c82333;
+}
+
+/* ================= Form Styles ================= */
+
+form {
+  position: relative;
+  z-index: 10001;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+form button:hover {
+  background-color: #575757;
+}
+
+/* Ícone flutuante do WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 3%;
+  z-index: 1000; /* Certifique-se de que o ícone fique acima de outros elementos */
+  background-color: #25d366;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}
+
+.whatsapp-float img {
+  width: 50px; /* Tamanho da imagem */
+  height: 50px;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1); /* Aumenta um pouco o tamanho ao passar o mouse */
+  transition: transform 0.3s ease;
+}
+
+
+/* ================= Media Queries ================= */
+
+/* Dispositivos pequenos (até 375px) */
+@media (max-width: 375px) {
+  .logo img {
+    max-width: 44px;
+    top: 22%;
+    margin-left: -5px;
+  }
+
+  .name img {
+    left: 26%;
+    top: -9%;
+    filter: drop-shadow(3px 0px 1px white);
+  }
+}
+
+/* Dispositivos médios (até 768px) */
+@media (max-width: 768px) {
+  .h1 {
+    font-size: 24px;
+    margin-right: 80px;
+    padding: 0;
+  }
+
+  .menu-icon {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .contact-info,
+  .login-options {
+    display: none;
+  }
+
+  body {
+    background-size: contain;
+  }
+
+  .header img {
+    max-width: 250px;
+    margin-right: 10px;
+  }
+
+  .logo img {
+    max-width: 64px;
+    margin-left: -7px;
+  }
+
+  .name img {
+    filter: drop-shadow(3px 0px 1px white);
+  }
+
+  .whatsapp-float img {
+    width: 30px; /* Tamanho da imagem */
+    height: 30px;
+  }
+
+  .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 1%;
+    padding: 10px;
+  }
+ 
+}
+
+@media (min-width: 1280px ) {
+  .login-options{
+    left: 92%;}
+}
+
+@media (min-width: 1920px) {
+  .login-options{
+    left: 87%;
+  }
+}
+
+
