@@ -137,10 +137,10 @@ const Home: React.FC = () => {
       
       {/* Rodapé */}
       <footer className={styles.footerContainer}>
-        <div className={styles.footerSection}>
+        {/* <div className={styles.footerSection}>
           <h2 className={styles.footerTitle}>CorpusFit</h2>
           <p className={styles.footerTagline}>Cuidar do corpo e da mente vale a pena!</p>
-        </div>
+        </div> */}
 
         <div className={styles.footerSectionMap}>
           <h3 className={styles.footerMapTitle}>Localização</h3>

@@ -27,6 +27,20 @@
   filter: drop-shadow(8px 5px 9px black);
 }
 
+.logoTitle{
+  font-family: Bebas Neue;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  color: #0f0;
+  margin-top: 78px;
+  text-shadow: #146e029e -2px 3px 0;
+  z-index: 1;
+  position: relative;
+  margin-top: 5%
+}
+
+
 /* Carrosséis */
 .carouselContainer {
   display: flex;
@@ -130,7 +144,7 @@
 }
 .footerSectionMap{
   position: relative;
-  margin: 15px 34%;
+  margin: 15px 39%;
 }
 
 .footerSectionContact{
@@ -175,9 +189,13 @@
   font-family: Arial, sans-serif;
   color: #0f0;
   margin-bottom: 10px;
-  margin-left: -19%;
+  margin-left: -9%;
 }
 
+.footerMapText{
+  left: -5%;
+  position: relative;
+}
 .cardContainer {
   position: relative;
   width: 100%;
@@ -336,7 +354,11 @@
 
   .footerSection {
     margin: 10px;
-    left: 0;
+    left: 36px;
+  }
+
+  .logoTitle{
+    font-size: 2.5rem;
   }
 
   
@@ -451,7 +473,7 @@
 
   .footerSection {
     margin: 20px;
-    left: 33%;
+    left: 39%;
     
   }
 
@@ -477,7 +499,7 @@
 
   .footerSection {
     margin: 20px;
-    left: 33%;
+    left: 39%;
     
   }
 

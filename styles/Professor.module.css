@@ -1,12 +1,20 @@
 /* Estilos para o container geral */
 .dashboardContainer {
-  padding: 50px 20px;
-  background-color: #1b2431; /* Fundo escuro */
+  padding: 20px;
+  background-color: #1b2431;
   color: white;
   min-height: 100vh;
-  z-index: 1;
-  position: relative;
-  margin-top: 3.9%;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  position: fixed;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: auto;
+  top: 7%;
   max-width: 100%;
   overflow-x: hidden;
 }
@@ -46,8 +54,26 @@
 }
 
 .paginationButton {
+  padding: 2px 1px;
   border-color: rgba(34, 34, 41, 0.65);
   background-color: rgba(92, 87, 111, 0.65);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.paginationButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.paginationInfo {
+  font-size: 1rem;
 }
 
 /* Botão de adicionar aluno */
@@ -114,6 +140,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #f4f4f4;
+  color: black;
 }
 
 .submitButton {
@@ -197,10 +224,9 @@
 
 /* Estilos principais da tabela */
 .projectsInner {
+  margin-top: 40px;
   width: 100%;
-  max-width: 100vw;
-  box-sizing: border-box;
-  overflow-x: hidden;
+  max-width: 1000px;
 }
 
 .projectsHeader {
@@ -223,8 +249,11 @@
 
 .projectsTable {
   width: 100%;
-  table-layout: auto;
-  border-collapse: collapse;
+  background-color: #273142;
+  margin-top: 20px;
+  max-width: 100%;
+  table-layout: fixed;
+  word-wrap: break-word;
 }
 
 .projectsTable th {
@@ -283,10 +312,35 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: medium;
+  font-family: system-ui;
+  font-weight: 400;
+  background-color: #3d4653;
 }
 
 .actionButtons button:hover {
   background-color: #0056b3;
+}
+
+.deleteButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: medium;
+  font-family: system-ui;
+  font-weight: 400;
+  background-color: #3d4653;
+}
+.toggleCheckbox:checked + .toggleLabel .thumb {
+  left: calc(100% - 28px); /* Move a bolinha para a direita quando ON */
+}
+
+.actionButtons .toggle {
+  margin: 0 10px; /* Adiciona espaçamento ao redor do botão se necessário */
 }
 
 /* Estilos para o modal de criação de treino */
@@ -299,24 +353,27 @@
   padding: 20px;
   border-radius: 8px;
   width: 90%;
-  max-width: 400px;
-  z-index: 20000;
+  max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2000;
 }
 
 /* Formulário dentro do modal */
 .formContainer,
-.formContainer form {
+.formContainer form  {
   position: relative;
-  background-color: #3d3c3e;
+  background-color: rgb(0, 0, 0);
   padding: 20px;
   border-radius: 8px;
+  background-color: rgb(61 60 62);
   z-index: 0;
 }
 
-.formContainer {
+.formContainer{
   margin-top: 1%;
-  max-width: 25%;
-  left: 37%;
 }
 
 .formContainer label {
@@ -346,61 +403,84 @@
   background-color: #56b30a;
 }
 
-/* Estilo de organização para os campos do modal */
+
 .modal h3 {
-  font-size: 1.8rem;
+  margin-top: 0;
   color: #00ff00;
-  margin-bottom: 20px;
+  font-family: 'Bebas Neue', sans-serif;
+  text-align: center;
 }
 
-.modal .inputField {
+.modal label {
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.modal .inputField,
+.modal select {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background-color: #f4f4f4;
-}
-
-/* Estilo para as labels e selects */
-.modal label {
-  display: block;
-  margin-bottom: 5px;
-  color: #ffffff;
-  font-size: 1rem;
-}
-
-.modal select {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 15px;
-  background-color: #f4f4f4;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Estilo para os botões no modal */
-.modal button {
-  background-color: #007bff;
-  color: white;
   border: none;
-  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #313d4f;
+  color: #ffffff;
+}
+
+.modal .inputField::placeholder {
+  color: #aaa;
+}
+
+
+/* Botões de Ação no Modal */
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modalActions button {
+  flex: 1;
+  margin: 5px;
+  padding: 10px;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 10px;
+  font-size: 1em;
 }
 
-.modal button:hover {
+.modalActions button:nth-child(1) {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.modalActions button:nth-child(1):hover {
   background-color: #0056b3;
 }
 
-.modal .addExerciseButton {
-  margin-top: 15px;
+.modalActions button:nth-child(2) {
   background-color: #28a745;
+  color: #ffffff;
 }
 
-.modal .addExerciseButton:hover {
+.modalActions button:nth-child(2):hover {
   background-color: #218838;
+}
+
+.modalActions button:nth-child(3) {
+  background-color: #6c757d;
+  color: #ffffff;
+}
+
+.modalActions button:nth-child(3):hover {
+  background-color: #5a6268;
+}
+
+/* Container dos Exercícios */
+.exerciseContainer {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  padding-right: 5px;
 }
 
 .cardImage {
@@ -425,7 +505,7 @@
 
 /* suggestions */
 .suggestionsContainer {
-  margin-top: 5px;
+  margin-top: 120px;
   background-color: #4b4b4b;
   border: 1px solid #252525;
   border-radius: 4px;
@@ -560,7 +640,7 @@
 
 .bellIcon {
   font-size: 1.5em;
-  color: #333;
+  color: #ffffff;
 }
 
 .notificationBadge {
@@ -772,15 +852,23 @@
     font-size: 1.5rem;
   }
 
-  .actionButtons button {
-    font-size: 0.8rem;
-    padding: 5px 2px;
+  .projectsTable .actionButtons {
+    display: grid;
+    gap: 11px;
+    left: -11%;
+    position: relative;
+
+  }
+
+  .actionButtons button{
+    /* padding: 2px 3px; */
+    font-size: small;
+    padding: 10px 6px;
   }
 
   .paginationButton {
-    margin-left: -3px !important;
-    font-size: 18px !important;
-    margin: 9px !important;
+    margin-right: 12px;
+    
   }
 }
 

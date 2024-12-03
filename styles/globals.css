@@ -328,8 +328,9 @@ form button:hover {
   }
 
   .whatsapp-float img {
-    width: 30px; /* Tamanho da imagem */
-    height: 30px;
+    width: 20px; /* Tamanho da imagem */
+    height: 20px;
+    
   }
 
   .whatsapp-float {

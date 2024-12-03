@@ -1,5 +1,5 @@
 // pages/_app.tsx
-
+import styles from '../styles/Home.module.css';
 import '../styles/globals.css'; // Importar estilos globais
 import type { AppProps } from 'next/app';
 import React, { useEffect, useState } from 'react';
@@ -40,8 +40,13 @@ const Header: React.FC = () => {
         >
           <Image src="/images/Logo.svg" alt="Logo" width={100} height={50} />
         </div>
-        <div className="Name">
-          <Image src="/images/Logo.name.png" alt="Logoname" width={150} height={50} />
+
+        <div 
+        className="logo" 
+        onClick={() => router.push('/')}
+        style={{ cursor: 'pointer' }}
+      >
+        <h1 className={styles.logoTitle}>CORPUSFIT</h1>
         </div>
 
         <div className="login-options">
