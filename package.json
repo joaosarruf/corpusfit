@@ -2,14 +2,14 @@
   "name": "gym-website",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "start": "cross-env NODE_ENV=production PORT=8080 node server.js", 
-  "dev": "cross-env NODE_ENV=development PORT=3001 node server.js", 
-  "cloudflare": "cloudflared tunnel --url http://localhost:8080",
-  "wait-and-cloudflare": "wait-on http://localhost:8080 && npm run cloudflare",
-  "start-prod": "concurrently \"npm run start\" \"npm run wait-and-cloudflare\"",
-  "build": "next build"
-},
+  "scripts": {
+    "start": "cross-env NODE_ENV=production PORT=8080 node server.js",
+    "dev": "cross-env NODE_ENV=development NEXT_PUBLIC_NEXT_DIR=.next-dev PORT=3001 node server.js",
+    "build": "next build",
+    "cloudflare": "cloudflared tunnel --url http://localhost:8080",
+    "wait-and-cloudflare": "cloudflared tunnel --config ./config.yml run",
+    "start-prod": "concurrently \"npm run start\" \"npm run wait-and-cloudflare\""
+  },
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -27,6 +27,7 @@
     "next": "^15.0.3",
     "next-connect": "^1.0.0",
     "nodemailer": "^6.9.15",
+    "pdfkit": "^0.15.1",
     "react": "^18.3.1",
     "react-big-calendar": "^1.15.0",
     "react-chartjs-2": "^5.2.0",

@@ -6,11 +6,12 @@
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
+  margin-top: 4%;
 }
 
 .headerTitle {
   text-align: center;
-  color: #333;
+  color: #dddddd;
 }
 
 .alunoInfo {
@@ -20,7 +21,7 @@
 
 .alunoName {
   font-size: 24px;
-  color: #555;
+  color: #dddddd;
 }
 
 .alunoPhoto {
@@ -145,8 +146,34 @@
 }
 
 .plusIcon {
-  color: #3498db; /* Blue */
+  color: #646464; /* Blue */
   font-size: 24px;
+}
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.downloadButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.downloadButton:hover {
+  background-color: #0056b3;
+}
+
+
+
+.checkmarkIcon {
+  font-size: 1.5em;
+  color: green; /* Ou a cor que preferir */
+  cursor: pointer;
 }
 
 /* Treino Letter Icon Styles */
@@ -285,4 +312,10 @@
 
 .cancelButton:hover {
   background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .dashboardContainer {
+    margin-top: 14%;
+  }
 }

@@ -16,10 +16,11 @@ interface Aluno {
   id: number;
   name: string;
   login: string;
-  birth_date?: string;
   cpf?: string;
+  birth_date?: string;
   email?: string;
   telefone?: string;
+  photo_url?: string; 
 }
 
 interface Exercise {
@@ -52,6 +53,23 @@ interface Card {
   position_mobile?: { x: number; y: number };
 }
 
+interface ExercicioCategorias {
+  peito: string[];
+  triceps: string[];
+  costas: string[];
+  biceps: string[];
+  pernas: {
+    quadriceps: string[];
+    posterior: string[];
+    gluteos: string[];
+    panturrilhas: string[];
+  };
+  ombros: string[];
+  abdominais: string[];
+}
+
+
+
 // Função para buscar alunos da API
 const fetchAlunos = async (): Promise<Aluno[]> => {
   const token = localStorage.getItem('token');
@@ -67,10 +85,11 @@ const fetchAlunos = async (): Promise<Aluno[]> => {
 
   const data = await response.json();
 
-  // Assegurar que o ID seja um número
+  // Assegurar que o ID seja um número e retornar a URL da foto
   return data.map((aluno: any) => ({
     ...aluno,
     id: Number(aluno.id),
+    photo_url: aluno.photo_url || 'default-photo-url.jpg', // URL da foto ou padrão
   }));
 };
 
@@ -133,11 +152,11 @@ const ProfessorDashboard: React.FC = () => {
   };
   // {Expansão da lista de alunos}
   const [isExpandedAlunos, setIsExpandedAlunos] = useState(false); // Controla a expansão da lista de alunos  
-  const [searchTermAlunos, setSearchTermAlunos] = useState(''); // Termo de busca para alunos
   const [newAlunoBirthDate, setNewAlunoBirthDate] = useState('');
   const [newAlunoCPF, setNewAlunoCPF] = useState('');
   const [newAlunoEmail, setNewAlunoEmail] = useState('');
   const [newAlunoTelefone, setNewAlunoTelefone] = useState('');
+  const [newAlunoPhoto, setNewAlunoPhoto] = useState('');
 
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const createLoginSuggestions = async (name: string) => {
@@ -372,6 +391,82 @@ const ProfessorDashboard: React.FC = () => {
     }
   }, [alunoParaAlterar]);
 
+
+  const [exercicioEditando, setExercicioEditando] = useState<any>(null);
+
+   // Função para editar exercício
+   const handleEditExercicio = (treinoId: number, exercicioIndex: number) => {
+   const treino = treinos.find(t => t.id === treinoId);
+    if (treino) {
+      const exercicio = treino.exercicios[exercicioIndex];
+      // Definir o exercício a ser editado
+      setExercicioEditando({
+        treinoId,
+        exercicioIndex,
+        name: exercicio.name,
+        carga: exercicio.carga,
+        repeticoes: exercicio.repeticoes,
+      });
+    } else {
+      console.log('Treino não encontrado!');
+    }
+  };
+
+  const handleSaveExercicio = () => {
+    const { treinoId, exercicioIndex, name, carga, repeticoes } = exercicioEditando;
+    const treino = treinos.find(t => t.id === treinoId);
+  
+    if (treino) {
+      // Atualizar o exercício no treino
+      const treinoEditado = { ...treino };
+      treinoEditado.exercicios = [...treinoEditado.exercicios];
+      treinoEditado.exercicios[exercicioIndex] = { name, carga, repeticoes };
+  
+      // Atualizar o estado de treinos
+      setTreinos(prevTreinos =>
+        prevTreinos.map(t =>
+          t.id === treinoId ? treinoEditado : t
+        )
+      );
+  
+      // Limpar o estado de edição
+      setExercicioEditando(null);
+    }
+  };
+
+  // Função de salvar alterações
+  // const salvarAlteracoesAPI = async (treinoId: number, exercicioIndex: number, dadosAlterados: any) => {
+  //   try {
+  //     const treino = treinos.find(t => t.id === treinoId);
+  //     if (treino) {
+  //       const exercicio = treino.exercicios[exercicioIndex];
+  //       // Aqui você pode atualizar os dados localmente
+  //       exercicio.name = dadosAlterados.name;
+  //       exercicio.carga = dadosAlterados.carga;
+  //       exercicio.repeticoes = dadosAlterados.repeticoes;
+
+  //       // Depois, você pode fazer a chamada à API para salvar as alterações
+  //       const response = await fetch(`/api/treinos/${treinoId}/exercicios/${exercicio.id}`, {
+  //         method: 'PUT',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: `Bearer ${localStorage.getItem('token')}`,
+  //         },
+  //         body: JSON.stringify(dadosAlterados),
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error('Erro ao salvar alterações');
+  //       }
+
+  //       // Caso a edição tenha sido bem-sucedida, atualize o estado
+  //       setTreinos([...treinos]); // Atualiza os treinos após a edição
+  //     }
+  //   } catch (error) {
+  //     console.error('Erro ao salvar alterações', error);
+  //   }
+  // };
+
   const [newAlunoName, setNewAlunoName] = useState('');
   const [newAlunoLogin, setNewAlunoLogin] = useState('');
   const [newAlunoPassword, setNewAlunoPassword] = useState('');
@@ -384,6 +479,8 @@ const ProfessorDashboard: React.FC = () => {
     descricao: '',         // Descrição inicial vazia
     exercicios: [],        // Lista de exercícios
   });
+  
+  const [searchTermAlunos, setSearchTermAlunos] = useState(''); // Termo de busca para alunos
 
   // Lógica para filtrar os alunos de acordo com a busca
   const filteredAlunos = alunos.filter((aluno) =>
@@ -393,18 +490,18 @@ const ProfessorDashboard: React.FC = () => {
   
   const [currentPageAlunos, setCurrentPageAlunos] = useState(1);
   const alunosPorPagina = 5; // Quantos alunos serão exibidos por página
-  const indexOfLastAluno = currentPageAlunos * alunosPorPagina;
-  const indexOfFirstAluno = indexOfLastAluno - alunosPorPagina;
-  const currentAlunos = filteredAlunos.slice(indexOfFirstAluno, indexOfLastAluno);
-
-  const paginateAlunos = (pageNumber: number) => {
+  
+   // Paginação após o filtro
+   const indexOfLastAluno = currentPageAlunos * alunosPorPagina;
+   const indexOfFirstAluno = indexOfLastAluno - alunosPorPagina;
+   const currentAlunos = filteredAlunos.slice(indexOfFirstAluno, indexOfLastAluno);
+  
+   const paginateAlunos = (pageNumber: number) => {
     setCurrentPageAlunos(pageNumber);
   };
 
-  
-
   // Padrões da academia para exercícios, cargas e repetições
-  const exerciciosPadroes = {
+  const [exerciciosPadroes, setExerciciosPadroes] = useState<ExercicioCategorias>({
     peito: [
         'Supino Reto', 
         'Supino Inclinado', 
@@ -518,7 +615,87 @@ const ProfessorDashboard: React.FC = () => {
         'Abdominal Supra na Polia', 
         'Sit-Up'
     ]
-};
+  });
+
+  const [novoExercicio, setNovoExercicio] = useState("");
+  const [novaCategoria, setNovaCategoria] = useState<keyof typeof exerciciosPadroes | "">("");
+  const [novaSubCategoria, setNovaSubCategoria] = useState("");
+
+  // Função para exibir e processar o popup
+  const adicionarExercicio = () => {
+    // Criar uma variável que será usada como popup
+    const popup = document.createElement("div");
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.padding = "20px";
+    popup.style.backgroundColor = "white";
+    popup.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+    popup.style.zIndex = "1000";
+
+    // Adicionar conteúdo ao popup
+    popup.innerHTML = `
+      <h2>Adicionar Novo Exercício</h2>
+      <label>
+        Nome do exercício:
+        <input id="novoExercicio" type="text" style="display:block; margin:10px 0; width:100%; padding:8px;" />
+      </label>
+      <label>
+        Categoria:
+        <select id="novaCategoria" style="display:block; margin:10px 0; width:100%; padding:8px;">
+          <option value="">Selecione a categoria</option>
+          ${Object.keys(exerciciosPadroes)
+            .map(
+              (categoria) =>
+                `<option value="${categoria}">${categoria.charAt(0).toUpperCase() + categoria.slice(1)}</option>`
+            )
+            .join("")}
+        </select>
+      </label>
+      <button id="adicionarBtn" style="padding:10px 20px; background-color:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer; margin-right:10px;">Adicionar</button>
+      <button id="cancelarBtn" style="padding:10px 20px; background-color:#FF0000; color:white; border:none; border-radius:4px; cursor:pointer;">Cancelar</button>
+    `;
+
+    // Adicionar o popup ao DOM
+    document.body.appendChild(popup);
+
+    // Atribuir eventos aos botões do popup
+    const adicionarBtn = popup.querySelector("#adicionarBtn") as HTMLButtonElement;
+    const cancelarBtn = popup.querySelector("#cancelarBtn") as HTMLButtonElement;
+
+    adicionarBtn.addEventListener("click", () => {
+      const novoExercicioInput = (popup.querySelector("#novoExercicio") as HTMLInputElement).value.trim();
+      const novaCategoriaSelect = (popup.querySelector("#novaCategoria") as HTMLSelectElement).value;
+
+      if (!novoExercicioInput || !novaCategoriaSelect) {
+        alert("Por favor, preencha todos os campos!");
+        return;
+      }
+
+      // Atualizar a lista de exercícios
+      setExerciciosPadroes((prev) => {
+        const categoria = prev[novaCategoriaSelect as keyof typeof exerciciosPadroes];
+
+        if (Array.isArray(categoria)) {
+          return {
+            ...prev,
+            [novaCategoriaSelect]: [...categoria, novoExercicioInput],
+          };
+        }
+
+        return prev;
+      });
+
+      // Fechar o popup após adicionar
+      document.body.removeChild(popup);
+    });
+
+    cancelarBtn.addEventListener("click", () => {
+      // Fechar o popup sem salvar
+      document.body.removeChild(popup);
+    });
+  };
 
   const cargasPadroes = [10, 20, 30, 40, 50, 60];
   const repeticoesPadroes = [6, 8, 10, 12, 15];
@@ -539,6 +716,36 @@ const ProfessorDashboard: React.FC = () => {
 
     loadAlunos();
   }, []);
+
+  const handleDeleteTreino = async (treinoId: number) => {
+    const confirmDelete = confirm('Tem certeza que deseja excluir este treino?');
+    if (!confirmDelete) return;
+  
+    try {
+      const response = await fetch(`/api/treinos?treino_id=${treinoId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Erro ao excluir treino.');
+      }
+  
+      // Atualize a lista de treinos no estado
+      setTreinos(treinos.filter((treino) => treino.id !== treinoId));
+  
+      alert('Treino excluído com sucesso.');
+    } catch (error) {
+      console.error('Erro ao excluir treino:', error);
+      alert('Erro ao excluir treino.');
+    }
+  };
+  
+
+
+
 
   // Fetch para buscar os treinos de um aluno
   const handleViewTreinos = async (aluno: Aluno) => {
@@ -564,6 +771,32 @@ const ProfessorDashboard: React.FC = () => {
   const handleOpenCreateTreino = (aluno: Aluno) => {
     setSelectedAluno(aluno);
     setShowCreateTreino(true);
+  };
+
+  const handleDeleteAluno = async (aluno: Aluno) => {
+    const confirmDelete = confirm(`Tem certeza que deseja excluir o aluno ${aluno.name}?`);
+    if (!confirmDelete) return;
+  
+    try {
+      const response = await fetch(`/api/alunos?id=${aluno.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Erro ao excluir aluno.');
+      }
+  
+      // Remove o aluno da lista no estado
+      setAlunos(alunos.filter((a) => a.id !== aluno.id));
+  
+      alert(`Aluno ${aluno.name} excluído com sucesso.`);
+    } catch (error) {
+      console.error('Erro ao excluir aluno:', error);
+      alert('Erro ao excluir aluno.');
+    }
   };
 
   // Criar treino
@@ -616,24 +849,28 @@ const ProfessorDashboard: React.FC = () => {
   const handleAddAluno = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-  
+    
     try {
       // Criar um objeto FormData
       const formData = new FormData();
+      
+      // Adiciona os campos de texto
       formData.append('name', newAlunoName);
       formData.append('login', newAlunoLogin);
       formData.append('password', newAlunoPassword);
-      if (newAlunoCPF) formData.append('cpf', newAlunoCPF);
-      if (newAlunoBirthDate) formData.append('birth_date', newAlunoBirthDate);
+      if (newAlunoCPF) formData.append('cpf', String(newAlunoCPF));
+      if (newAlunoBirthDate) formData.append('birth_date', String(newAlunoBirthDate));
       if (newAlunoEmail) formData.append('email', newAlunoEmail);
       if (newAlunoTelefone) formData.append('telefone', newAlunoTelefone);
-  
+      
       // Obter o arquivo da foto
       const photoInput = e.currentTarget.querySelector('input[name="photo"]') as HTMLInputElement;
       if (photoInput && photoInput.files && photoInput.files[0]) {
+        // Adiciona o arquivo da foto ao FormData
         formData.append('photo', photoInput.files[0]);
       }
-  
+      
+      // Enviar a requisição para criar o aluno
       const response = await fetch('/api/alunos', {
         method: 'POST',
         headers: {
@@ -684,48 +921,56 @@ const ProfessorDashboard: React.FC = () => {
     e.preventDefault();
     if (!alunoParaAlterar) return;
   
-    // Remove empty strings from alunoDadosAlterados
-    const updatedData = Object.fromEntries(
-      Object.entries(alunoDadosAlterados).filter(
-        ([_, value]) => value !== ''
+    // Criar um objeto FormData
+  const updatedData = new FormData();
+  
+  // Filtra os dados não vazios
+  for (const [key, value] of Object.entries(alunoDadosAlterados)) {
+    if (value !== '') {
+      updatedData.append(key, String(value)); // Convertendo valor para string
+    }
+  }   
+  
+  const photoInput = e.currentTarget.querySelector('input[name="photo"]') as HTMLInputElement;
+  if (photoInput && photoInput.files && photoInput.files[0]) {
+    updatedData.append('photo', photoInput.files[0]);
+  }
+  
+  try {
+    const response = await fetch(`/api/alunos/${alunoParaAlterar.id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: updatedData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao atualizar dados do aluno');
+    }
+
+    // Fetch dos dados atualizados
+    const updatedAlunoResponse = await fetch(`/api/alunos/${alunoParaAlterar.id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    const updatedAluno = await updatedAlunoResponse.json();
+
+    // Atualizar o estado dos alunos
+    setAlunos(
+      alunos.map((aluno) =>
+        aluno.id === alunoParaAlterar.id ? { ...aluno, ...updatedAluno } : aluno
       )
     );
-  
-    try {
-      const response = await fetch(`/api/alunos/${alunoParaAlterar.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(updatedData),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Erro ao atualizar dados do aluno');
-      }
-  
-      // Fetch updated student data from the server
-      const updatedAlunoResponse = await fetch(`/api/alunos/${alunoParaAlterar.id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      const updatedAluno = await updatedAlunoResponse.json();
-  
-      // Update the alunos state with the updated data
-      setAlunos(
-        alunos.map((aluno) =>
-          aluno.id === alunoParaAlterar.id ? { ...aluno, ...updatedAluno } : aluno
-        )
-      );
-  
-      setShowAlterarDados(false);
-      setAlunoDadosAlterados({});
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
+    setShowAlterarDados(false);
+    setAlunoDadosAlterados({});
+  } catch (error) {
+    console.error(error);
+    alert('Erro ao alterar dados do aluno');
+  }
+};
 
   return (
     <div className={styles.dashboardContainer}>
@@ -899,9 +1144,18 @@ const ProfessorDashboard: React.FC = () => {
               </option>
             ))}
           </select>
-
+      
           {alunoParaAlterar && (
             <>
+              <input
+                type="text"
+                placeholder="Nome"
+                value={alunoDadosAlterados.name || ''}
+                onChange={(e) =>
+                  setAlunoDadosAlterados({ ...alunoDadosAlterados, name: e.target.value })
+                }
+                className={styles.inputField}
+              />
               <input
                 type="text"
                 placeholder="CPF"
@@ -938,9 +1192,16 @@ const ProfessorDashboard: React.FC = () => {
                 }
                 className={styles.inputField}
               />
+              {/* Campo para a foto */}
+              <input
+                type="file"
+                accept="image/*"
+                name="photo"
+                className={styles.inputField}
+              />
             </>
           )}
-
+      
           <button type="submit" className={styles.submitButton}>
             Salvar
           </button>
@@ -999,10 +1260,13 @@ const ProfessorDashboard: React.FC = () => {
                         {verificarDadosCompletos(aluno) ? '✅' : '❗'}
                       </td>
                       <td>
-                        <div className={styles.actionButtons}>
-                          <button onClick={() => handleViewTreinos(aluno)}>Ver Treinos</button>
-                        </div>
-                      </td>
+                      <div className={styles.actionButtons}>
+                        <button onClick={() => handleViewTreinos(aluno)}>Ver Treinos</button>
+                        <button onClick={() => handleDeleteAluno(aluno)} className={styles.deleteButton}>
+                          Excluir
+                        </button>
+                      </div>
+                    </td>
                     </tr>
                   ))
                 ) : (
@@ -1052,11 +1316,49 @@ const ProfessorDashboard: React.FC = () => {
           {treinos.length > 0 ? (
             treinos.map((treino) => (
               <div key={treino.id} className={styles.treinoCard}>
-                <h4>{treino.descricao}</h4>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h4>{treino.descricao}</h4>
+                  <button
+                    onClick={() => handleDeleteTreino(treino.id)}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '18px',
+                      color: 'red',
+                      marginLeft: '10px',
+                    }}
+                    title="Excluir treino"
+                    aria-label={`Excluir ${treino.descricao}`}
+                  >
+                    🗑️
+                  </button>
+                </div>
                 <ul>
                   {treino.exercicios.map((exercicio, index) => (
-                    <li key={index}>
-                      {exercicio.name} - {exercicio.carga} kg - {exercicio.repeticoes} repetições
+                    <li
+                      key={index}
+                      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                    >
+                       <span>
+                        <span className={styles.treinoNumero}>{index + 1}. </span>
+                        {exercicio.name} - {exercicio.carga} kg - {exercicio.repeticoes} repetições
+                      </span>
+                      {/* <button
+                        onClick={() => handleEditExercicio(treino.id, index)}
+                        style={{
+                          background: 'transparent',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '18px',
+                          color: 'rgb(227 227 227)',
+                          marginLeft: '10px',
+                        }}
+                        title="Editar exercício"
+                        aria-label={`Editar ${exercicio.name}`}
+                      >
+                        🖉
+                      </button> */}
                     </li>
                   ))}
                 </ul>
@@ -1067,112 +1369,143 @@ const ProfessorDashboard: React.FC = () => {
           )}
         </div>
       )}
+        {exercicioEditando && (
+        <div>
+          <h4>Editar exercício</h4>
+          <input
+            type="text"
+            value={exercicioEditando.name}
+            onChange={(e) => setExercicioEditando({ ...exercicioEditando, name: e.target.value })}
+            placeholder="Nome do exercício"
+          />
+          <input
+            type="number"
+            value={exercicioEditando.carga}
+            onChange={(e) => setExercicioEditando({ ...exercicioEditando, carga: e.target.value })}
+            placeholder="Carga (kg)"
+          />
+          <input
+            type="number"
+            value={exercicioEditando.repeticoes}
+            onChange={(e) => setExercicioEditando({ ...exercicioEditando, repeticoes: e.target.value })}
+            placeholder="Repetições"
+          />
+          <button onClick={handleSaveExercicio}>Salvar</button>
+        </div>
+      )}
 
   
-        {/* Modal de criação de treino */}
-        {showCreateTreino && selectedAluno && (
-          <div className={styles.modal}>
-            <h3>Criar Treino para {selectedAluno.name}</h3>
-            <label>Tipo de Treino:</label>
-            <select
-              value={newTreino.tipo}
-              onChange={(e) => setNewTreino({ ...newTreino, tipo: e.target.value })}
-              className={styles.inputField}
-            >
-              <option value="">Selecione o Tipo de Treino</option>
-              <option value="A">Treino A</option>
-              <option value="B">Treino B</option>
-              <option value="C">Treino C</option>
-              <option value="D">Treino D</option>
-            </select>
-  
-            {newTreino.exercicios.map((exercise, index) => (
-              <div key={index}>
-                <label>Exercício:</label>
-                <select
-                  value={exercise.name}
-                  onChange={(e) =>
-                    setNewTreino({
-                      ...newTreino,
-                      exercicios: newTreino.exercicios.map((ex, i) =>
-                        i === index ? { ...ex, name: e.target.value } : ex
-                      ),
-                    })
-                  }
-                  className={styles.inputField}
-                >
-                  <option value="">Selecione o Exercício</option>
-                    {Object.keys(exerciciosPadroes).map((categoria) => {
-                    const grupoExercicios = exerciciosPadroes[categoria as keyof typeof exerciciosPadroes];
+       
 
-                    if (Array.isArray(grupoExercicios)) {
-                      return (
-                        <optgroup key={categoria} label={`Exercícios para ${categoria.charAt(0).toUpperCase() + categoria.slice(1)}`}>
-                          {grupoExercicios.map((exercicio: string, idx: number) => (
-                            <option key={idx} value={exercicio}>
-                              {exercicio}
-                            </option>
-                          ))}
-                        </optgroup>
-                      );
-                    } else {
-                      return Object.keys(grupoExercicios).map((subcategoria) => (
-                        <optgroup key={subcategoria} label={`Exercícios para ${subcategoria.charAt(0).toUpperCase() + subcategoria.slice(1)}`}>
-                          {grupoExercicios[subcategoria as keyof typeof grupoExercicios].map((exercicio: string, idx: number) => (
-                            <option key={idx} value={exercicio}>
-                              {exercicio}
-                            </option>
-                          ))}
-                        </optgroup>
-                      ));
-                    }
-                  })}
-                </select>
-  
-                <label>Carga (kg):</label>
-                <select
-                  value={exercise.carga}
-                  onChange={(e) =>
-                    setNewTreino({
-                      ...newTreino,
-                      exercicios: newTreino.exercicios.map((ex, i) =>
-                        i === index ? { ...ex, carga: parseFloat(e.target.value) } : ex
-                      ),
-                    })
+      {/* Modal de criação de treino */}
+      {showCreateTreino && selectedAluno && (
+      <div className={styles.modal}>
+        <h3>Criar Treino para {selectedAluno.name}</h3>
+        <label htmlFor="tipoTreino">Tipo de Treino:</label>
+        <select  id="tipoTreino"
+          value={newTreino.tipo}
+          onChange={(e) => setNewTreino({ ...newTreino, tipo: e.target.value })}
+          className={styles.inputField}
+        >
+          <option value="">Selecione o Tipo de Treino</option>
+          <option value="A">Treino A</option>
+          <option value="B">Treino B</option>
+          <option value="C">Treino C</option>
+          <option value="D">Treino D</option>
+        </select>
+          
+        {/* Área de conteúdo rolável */}
+        <div className={styles.exerciseContainer}>
+          {newTreino.exercicios.map((exercise, index) => (
+            <div key={index} className={styles.exerciseItem}>
+              <label>Exercício:</label>
+              <select
+                value={exercise.name}
+                onChange={(e) =>
+                  setNewTreino({
+                    ...newTreino,
+                    exercicios: newTreino.exercicios.map((ex, i) =>
+                      i === index ? { ...ex, name: e.target.value } : ex
+                    ),
+                  })
+                }
+                className={styles.inputField}
+              >
+                <option value="">Selecione o Exercício</option>
+                  {Object.keys(exerciciosPadroes).map((categoria) => {
+                  const grupoExercicios = exerciciosPadroes[categoria as keyof typeof exerciciosPadroes];
+
+                  if (Array.isArray(grupoExercicios)) {
+                    return (
+                      <optgroup key={categoria} label={`Exercícios para ${categoria.charAt(0).toUpperCase() + categoria.slice(1)}`}>
+                        {grupoExercicios.map((exercicio: string, idx: number) => (
+                          <option key={idx} value={exercicio}>
+                            {exercicio}
+                          </option>
+                        ))}
+                      </optgroup>
+                    );
+                  } else {
+                    return Object.keys(grupoExercicios).map((subcategoria) => (
+                      <optgroup key={subcategoria} label={`Exercícios para ${subcategoria.charAt(0).toUpperCase() + subcategoria.slice(1)}`}>
+                        {grupoExercicios[subcategoria as keyof typeof grupoExercicios].map((exercicio: string, idx: number) => (
+                          <option key={idx} value={exercicio}>
+                            {exercicio}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ));
                   }
-                  className={styles.inputField}
-                >
-                  <option value="">Selecione a Carga</option>
-                  {cargasPadroes.map((carga, idx) => (
-                  <option key={idx} value={carga}>
-                    {carga} kg
-                  </option>
-                ))}
-                </select>
-  
-                <label>Repetições:</label>
-                <select
-                  value={exercise.repeticoes}
-                  onChange={(e) =>
-                    setNewTreino({
-                      ...newTreino,
-                      exercicios: newTreino.exercicios.map((ex, i) =>
-                        i === index ? { ...ex, repeticoes: parseFloat(e.target.value) } : ex
-                      ),
-                    })
-                  }
-                  className={styles.inputField}
-                >
-                  <option value="">Selecione as Repetições</option>
-                  {repeticoesPadroes.map((reps, idx) => (
-                  <option key={idx} value={reps}>
-                    {reps} repetições
-                  </option>
-                ))}
-                </select>
+                })}
+              </select>
+
+              <label>Carga (kg):</label>
+              <select
+                value={exercise.carga}
+                onChange={(e) =>
+                  setNewTreino({
+                    ...newTreino,
+                    exercicios: newTreino.exercicios.map((ex, i) =>
+                      i === index ? { ...ex, carga: parseFloat(e.target.value) } : ex
+                    ),
+                  })
+                }
+                className={styles.inputField}
+              >
+                <option value="">Selecione a Carga</option>
+                {cargasPadroes.map((carga, idx) => (
+                <option key={idx} value={carga}>
+                  {carga} kg
+                </option>
+              ))}
+              </select>
+
+              <label>Repetições:</label>
+              <select
+                value={exercise.repeticoes}
+                onChange={(e) =>
+                  setNewTreino({
+                    ...newTreino,
+                    exercicios: newTreino.exercicios.map((ex, i) =>
+                      i === index ? { ...ex, repeticoes: parseFloat(e.target.value) } : ex
+                    ),
+                  })
+                }
+                className={styles.inputField}
+              >
+                <option value="">Selecione as Repetições</option>
+                {repeticoesPadroes.map((reps, idx) => (
+                <option key={idx} value={reps}>
+                  {reps} repetições
+                </option>
+              ))}
+              </select>
               </div>
             ))}
-  
+          </div>
+          
+            {/* Botões de ação fixos na parte inferior */}
+          <div className={styles.modalActions}>
             <button
               onClick={() =>
                 setNewTreino({
@@ -1186,7 +1519,9 @@ const ProfessorDashboard: React.FC = () => {
             <button onClick={handleCreateTreino}>Salvar Treino</button>
             <button onClick={() => setShowCreateTreino(false)}>Cancelar</button>
           </div>
-        )}
+        </div>
+      )}
+            
   
         {/* Exibir gerenciamento de posts se o professor tiver permissão */}
         {canManagePosts && (

@@ -58,6 +58,19 @@ const dbRun = (sql, params) => {
   });
 };
 
+const createPhotosTableIfNeeded = async () => {
+  const createTableSQL = `
+    CREATE TABLE IF NOT EXISTS photos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      aluno_id INTEGER NOT NULL,
+      photo_path TEXT NOT NULL,
+      FOREIGN KEY (aluno_id) REFERENCES users(id)
+    )
+  `;
+  
+  await dbRun(createTableSQL, []);
+};
+
 const handler = async (req, res) => {
   if (req.method === 'GET') {
     const { login, checkLogin } = req.query;
@@ -77,6 +90,7 @@ const handler = async (req, res) => {
           return res.status(404).json({ error: 'Aluno não encontrado' });
         }
 
+        const foto = await dbGet('SELECT photo_path FROM photos WHERE aluno_id = ?', [aluno.id]);
         const treinos = await new Promise((resolve, reject) => {
           db.all('SELECT * FROM treinos WHERE aluno_id = ?', [aluno.id], (err, rows) => {
             if (err) reject(err);
@@ -86,9 +100,10 @@ const handler = async (req, res) => {
 
         res.status(200).json({
           aluno: {
+            id: aluno.id, // Adicione esta linha
             name: aluno.name,
             login: aluno.login,
-            photo_path: aluno.photo_path,
+            photo_path: foto ? foto.photo_path : null, // Foto separada
           },
           treinos: treinos || [],
         });
@@ -113,32 +128,30 @@ const handler = async (req, res) => {
     }
   } else if (req.method === 'POST') {
     try {
+      await createPhotosTableIfNeeded();
       const { fields, files } = await parseForm(req);
+
       console.log('Campos recebidos:', fields);
       console.log('Arquivos recebidos:', files);
 
+      // Acessando diretamente os valores dos campos para garantir que sejam strings
       const { name, login, password, birth_date, cpf, email, telefone } = fields;
+      const alunoName = name && name[0];  // Acessando o primeiro valor do array 'name'
+      const alunoLogin = login && login[0];  // Acessando o primeiro valor do array 'login'
 
       // Verificar se os campos obrigatórios estão presentes
-      if (!name || !login || !password) {
+      if (!alunoName || !alunoLogin || !password) {
         return res.status(400).json({ error: 'Preencha todos os campos obrigatórios' });
       }
 
       // Verificar se o login já existe
-      const existingUser = await dbGet('SELECT * FROM users WHERE login = ?', [login]);
+      const existingUser = await dbGet('SELECT * FROM users WHERE login = ?', [alunoLogin]);
       if (existingUser) {
         return res.status(400).json({ error: 'Login já está em uso' });
       }
 
       // Garantir que a senha é uma string
-      let passwordStr;
-      if (Array.isArray(password)) {
-        passwordStr = password[0];
-        console.warn('Senha recebida como array, utilizando o primeiro elemento:', passwordStr);
-      } else {
-        passwordStr = password;
-      }
-
+      let passwordStr = password[0]; // A senha está no primeiro elemento do array
       if (typeof passwordStr !== 'string') {
         console.error('Tipo de Password inválido:', typeof passwordStr);
         return res.status(400).json({ error: 'Senha inválida' });
@@ -151,45 +164,41 @@ const handler = async (req, res) => {
 
       // Caminho da foto, se houver
       let photoPath = null;
-      if (files.photo) {
-        console.log('Detalhes do arquivo photo:', files.photo);
-        // Tentar obter o caminho do arquivo usando 'filepath' ou 'path'
-        const filePath = files.photo.filepath || files.photo.path;
+      if (files.photo && files.photo[0]) {
+        const filePath = files.photo[0].filepath || files.photo[0].path;
         if (filePath) {
           photoPath = `/uploads/alunos/${path.basename(filePath)}`;
-        } else {
-          console.warn('Arquivo photo recebido, mas o caminho está indefinido.');
         }
       }
-      
+
       // Inserir o novo aluno no banco de dados
-      try {
-        const result = await dbRun(
-          'INSERT INTO users (name, login, password, role, birth_date, cpf, email, telefone, photo_path) VALUES (?, ?, ?, "aluno", ?, ?, ?, ?, ?)',
-          [
-            name, // string
-            login, // string
-            hashedPassword, // string
-            birth_date || null, // string ou null
-            cpf || null, // string ou null
-            email || null, // string ou null
-            telefone || null, // string ou null
-            photoPath, // string ou null
-          ]
-        );
-      
-        // Retornar os dados do aluno criado
-        res.status(201).json({
-          id: result.lastID,
-          name,
-          login,
-          role: 'aluno',
-          photo_path: photoPath,
-        });
-      } catch (error) {
-        console.error('Erro ao inserir aluno:', error);
-        res.status(500).json({ error: 'Erro ao criar aluno' });
+      const result = await dbRun(
+        'INSERT INTO users (name, login, password, role, birth_date, cpf, email, telefone, photo_path) VALUES (?, ?, ?, "aluno", ?, ?, ?, ?, ?)',
+        [
+          alunoName,  // Acessando o valor correto
+          alunoLogin, // Acessando o valor correto
+          hashedPassword, 
+          birth_date || null, 
+          cpf || null, 
+          email || null, 
+          telefone || null, 
+          photoPath, 
+        ]
+      );
+
+      // Se foto foi enviada, armazena na tabela 'photos'
+      if (photoPath) {
+        await dbRun('INSERT INTO photos (aluno_id, photo_path) VALUES (?, ?)', [result.lastID, photoPath]);
       }
+
+      // Retornar os dados do aluno criado
+      res.status(201).json({
+        id: result.lastID,
+        name: alunoName,  // Acessando o valor correto
+        login: alunoLogin, // Acessando o valor correto
+        role: 'aluno',
+        photo_path: photoPath,
+      });
     } catch (error) {
       console.error('Erro ao criar aluno:', error);
       res.status(500).json({ error: 'Erro ao criar aluno' });
@@ -271,38 +280,54 @@ const handler = async (req, res) => {
         values.push(telefone);
       }
 
-      // Adicionar photo_path se uma nova foto for enviada
-      if (files.photo) {
-        if (typeof files.photo !== 'object') {
-          console.error('Tipo de photo inválido:', typeof files.photo);
-          return res.status(400).json({ error: 'Foto inválida' });
-        }
-        const filePath = files.photo.filepath || files.photo.path;
-        if (filePath) {
-          fieldsToUpdate.push('photo_path = ?');
-          values.push(`/uploads/alunos/${path.basename(filePath)}`);
-        } else {
-          console.warn('Arquivo photo recebido, mas o caminho está indefinido.');
-        }
-      }
-
-      if (fieldsToUpdate.length === 0) {
-        return res.status(400).json({ error: 'Nenhum campo para atualizar' });
-      }
-
+      // Atualizar o aluno no banco de dados
+      const setClause = fieldsToUpdate.join(', ');
+      const updateQuery = `UPDATE users SET ${setClause} WHERE id = ?`;
       values.push(id);
 
-      const sql = `UPDATE users SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
+      await dbRun(updateQuery, values);
+      
+      // Se houver foto para atualizar, faça isso também
+      if (files.photo) {
+        const filePath = files.photo.filepath || files.photo.path;
+        if (filePath) {
+          const newPhotoPath = `/uploads/alunos/${path.basename(filePath)}`;
 
-      await dbRun(sql, values);
-
-      res.status(200).json({ message: 'Dados do aluno atualizados com sucesso' });
-    } catch (error) {
-      console.error('Erro ao atualizar dados do aluno:', error);
-      res.status(500).json({ error: 'Erro ao atualizar dados do aluno' });
+          // Atualizar foto do aluno
+          await dbRun('UPDATE photos SET photo_path = ? WHERE aluno_id = ?', [newPhotoPath, id]);
+          
+          // Atualizar foto no aluno
+          await dbRun('UPDATE users SET photo_path = ? WHERE id = ?', [newPhotoPath, id]);
+        }
+      }
+      
+      res.status(200).json({ message: 'Aluno atualizado com sucesso' });
+    } catch (err) {
+      console.error('Erro ao atualizar aluno:', err);
+      res.status(500).json({ error: 'Erro ao atualizar aluno' });
     }
-  } else {
-    res.status(405).json({ error: 'Método não permitido' });
+  } else if (req.method === 'DELETE') {
+    const { id } = req.query;
+  
+    if (!id) {
+      return res.status(400).json({ error: 'ID do aluno é necessário' });
+    }
+  
+    try {
+      // Excluir o aluno da tabela 'users'
+      await dbRun('DELETE FROM users WHERE id = ?', [id]);
+  
+      // Excluir registros relacionados, se necessário
+      await dbRun('DELETE FROM photos WHERE aluno_id = ?', [id]);
+      await dbRun('DELETE FROM treinos WHERE aluno_id = ?', [id]);
+      await dbRun('DELETE FROM treino_sessions WHERE aluno_id = ?', [id]);
+      // Se houver exercícios relacionados aos treinos, você pode precisar excluí-los também
+  
+      res.status(200).json({ message: 'Aluno excluído com sucesso.' });
+    } catch (err) {
+      console.error('Erro ao excluir aluno:', err);
+      res.status(500).json({ error: 'Erro ao excluir aluno.' });
+    }
   }
 };
 

@@ -5,6 +5,11 @@ interface ImageUploaderProps {
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
+  const handleCancelImage = () => {
+    setSelectedImage(null); // Reseta a imagem selecionada
+    setImagePreview(null);  // Remove a pré-visualização
+  };
+  
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [zoomPC, setZoomPC] = useState<number>(1);
@@ -229,7 +234,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
         </select>
       </div>
 
-      {/* Image Upload */}
+     {/* Image Upload */}
       <input
         type="file"
         accept="image/*"
@@ -246,7 +251,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
             flexWrap: 'wrap',
           }}
         >
-          {/* PC View */}
+          {/* Image Pre-View */}
           {imagePreview && (
             <div
               style={{
@@ -260,7 +265,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
                 <div
                   style={{
                     width: '280px',
-                    height: '500px',
+                    height: `${(280 / 9) * 16}px`,
                     border: '6px solid #42ff00',
                     borderRadius: '15px',
                     backgroundImage: `url(${imagePreview})`,
@@ -301,10 +306,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
                       fontSize: '14px',
                     }}
                   >
-                    🖥️ Como fica no PC
+                    Use imagens no formato de um story (como no Instagram)
                   </div>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
+                  <label>Proporção da imagem: 16:9</label>
                   <label>Zoom: </label>
                   <input
                     type="range"
@@ -316,76 +322,20 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
                     style={{ width: '200px', color: 'black' }}
                   />
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* Mobile View */}
-          {imagePreview && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '20px',
-                flexWrap: 'wrap',
-              }}
-            >
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div
+                {/* Cancel Button */}
+                <button
+                  onClick={handleCancelImage}
                   style={{
-                    width: '289px',
-                    height: '300px',
-                    border: '4px solid rgb(97 255 0)',
-                    borderRadius: '10px',
-                    backgroundImage: `url(${imagePreview})`,
-                    backgroundSize: `${zoomMobile * 100}%`,
-                    backgroundPosition: `${positionMobile.x}px ${positionMobile.y}px`,
-                    backgroundRepeat: 'no-repeat',
-                    position: 'relative',
-                    display: 'flex',
-                    alignItems: 'center',
-                    touchAction: 'none', // Prevent scrolling when dragging
-                  }}
-                  onMouseDown={(e) => {
-                    setIsDraggingMobile(true);
-                    setStartPositionMobile({ x: e.clientX, y: e.clientY });
-                    setOffsetMobile(positionMobile);
-                  }}
-                  onTouchStart={(e) => {
-                    e.preventDefault();
-                    setIsDraggingMobile(true);
-                    setStartPositionMobile({ x: e.touches[0].clientX, y: e.touches[0].clientY });
-                    setOffsetMobile(positionMobile);
+                    padding: '10px 20px',
+                    backgroundColor: '#e74c3c',
+                    color: '#fff',
+                    borderRadius: '5px',
+                    border: 'none',
+                    cursor: 'pointer',
                   }}
                 >
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '5px',
-                      left: '5px',
-                      backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                      boxShadow: '0px 4px 8px black',
-                      color: 'white',
-                      padding: '3px 8px',
-                      borderRadius: '8px',
-                      fontSize: '12px',
-                    }}
-                  >
-                    📱 Como fica no Celular
-                  </div>
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label>Zoom: </label>
-                  <input
-                    type="range"
-                    min="1"
-                    max="3"
-                    step="0.1"
-                    value={zoomMobile}
-                    onChange={handleZoomChangeMobile}
-                    style={{ width: '200px', color: 'black' }}
-                  />
-                </div>
+                  Cancelar
+                </button>
               </div>
             </div>
           )}
