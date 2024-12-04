@@ -15,6 +15,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
   const [zoomPC, setZoomPC] = useState<number>(1);
   const [zoomMobile, setZoomMobile] = useState<number>(1);
   const [modalMessage, setModalMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false); // Novo estado para o carregamento
+
   // States for position and dragging for each view
   const [positionPC, setPositionPC] = useState({ x: 0, y: 0 });
   const [positionMobile, setPositionMobile] = useState({ x: 0, y: 0 });
@@ -56,6 +58,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
       setModalMessage('❌ Preencha o título, descrição e selecione uma imagem.');
       return;
     }
+
+    setIsLoading(true); // Inicia o carregamento
 
     try {
       // First, upload the image
@@ -116,6 +120,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
     } catch (error) {
       console.error(error);
       setModalMessage('❌ Ocorreu um erro ao criar o post.');
+    } finally {
+      setIsLoading(false); // Finaliza o carregamento
     }
   };
 
@@ -234,7 +240,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
         </select>
       </div>
 
-     {/* Image Upload */}
+      {/* Image Upload */}
       <input
         type="file"
         accept="image/*"
@@ -358,6 +364,35 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
         Criar Post
       </button>
 
+      {/* Indicador de Carregamento */}
+      {isLoading && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              width: '60px',
+              height: '60px',
+              border: '6px solid rgba(255, 255, 255, 0.6)',
+              borderTopColor: '#fff',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+            }}
+          />
+        </div>
+      )}
+
       {/* Confirmation Modal */}
       {modalMessage && (
         <div
@@ -402,6 +437,15 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
           </div>
         </div>
       )}
+
+      {/* Estilo para a animação do spinner */}
+      <style jsx>{`
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </div>
   );
 };
