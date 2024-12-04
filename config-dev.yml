@@ -1,0 +1,6 @@
+tunnel: af295e5d-3f39-4a1a-bfff-da12f7089bbb
+credentials-file: C:\Users\joaop\.cloudflared\af295e5d-3f39-4a1a-bfff-da12f7089bbb.json
+ingress:
+  - hostname: wwwdev.corpusfit.site
+    service: http://127.0.0.1:3001
+  - service: http_status:404
