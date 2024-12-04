@@ -7,6 +7,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+
+
 app.prepare().then(() => {
   const server = express();
 
@@ -29,7 +31,7 @@ app.prepare().then(() => {
   });
 
   // Porta dinâmica baseada no ambiente
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT || 8080;
   server.listen(port, '127.0.0.1', (err) => {
     if (err) throw err;
     console.log(`> Servidor pronto em http://127.0.0.1:${port}`);

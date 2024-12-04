@@ -1,0 +1,8 @@
+tunnel: c56f2b11-84a8-400e-94f5-29b709f50080
+credentials-file: C:\Users\joaop\.cloudflared\c56f2b11-84a8-400e-94f5-29b709f50080.json
+ingress:
+  - hostname: www.corpusfit.site
+    service: http://127.0.0.1:8080
+  - hostname: corpusfit.site
+    service: http://127.0.0.1:8080
+  - service: http_status:404
